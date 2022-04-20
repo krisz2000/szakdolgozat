@@ -1,0 +1,8 @@
+build
+SporutsML.egg-info
+.mypy_cache
+.vscode
+Dockerfile
+.dockerignore
+
+__pycache__
