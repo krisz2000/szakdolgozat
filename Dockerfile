@@ -15,9 +15,11 @@ RUN export PATH=/opt/python-${py_version}/bin:$PATH
 
 RUN apt update && apt install -y \
     cmake \ 
-    qt4-default  
+    qt4-default  \
+    git
 
 WORKDIR /app
+RUN git clone https://github.com/pybind/pybind11.git
 COPY glop-2.2 glop-2.2
 COPY pybind11 pybind11
 COPY CMakeLists.txt build_source.sh representation_mapper.cpp ./
