@@ -40,7 +40,7 @@ def play_game(state: Any, model: RNN, debug=False) -> List[str]:
             print(f"A jelenlegi állapot: {state.export_to_string()}")
         visited_states.append(state.export_to_string())
     if debug:
-        print("Végállapot elérve\n")
+        print("Végállapot elérve\n"
     return visited_states
 
 
@@ -95,7 +95,8 @@ def main():
         training(pos, model)
         print(f"Tanítási körök száma: {i+1} / {TRAINING_ROUNDS}")
         print(
-            f"Első játékos győzelmei: {first_player_wins}, Második játékos győzelmei: {second_player_wins}"
+            f"Első játékos győzelmei: {first_player_wins}, "
+            f"Második játékos győzelmei: {second_player_wins}"
         )
         print()
         first_player_wins = 0
