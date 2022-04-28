@@ -18,10 +18,10 @@ second_player_wins = 0
 def epsilon_state(
     choosen_state_index: int,
     number_of_states: int,
-    eps: float = 0.1,
+    epsilon: float = 0.1,
 ) -> int:
     p = np.random.random()
-    if p >= eps:
+    if p >= epsilon:
         return choosen_state_index
     else:
         choosen_state_index = np.random.randint(0, number_of_states)
@@ -64,7 +64,7 @@ def calculate_state_rewards(
     return state_rewards
 
 
-def training(starting_pos: Any, model: RNN) -> None:
+def training(starting_pos: sprouts.Position, model: RNN) -> None:
     all_state_rewards = []
     for _ in range(NUMBER_OF_EPISODES):
         visited_states = play_game(starting_pos, model)

@@ -1,4 +1,4 @@
-from abc import abstractmethod
+from abc import ABC, abstractmethod
 from typing import Any, Dict, List, Tuple
 import torch
 import torch.nn as nn
@@ -10,7 +10,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 soft_max = nn.Softmax(0)
 
 
-class SproutsModel:
+class SproutsModel(ABC):
     @abstractmethod
     def choose_state(
         self,

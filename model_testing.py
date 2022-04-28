@@ -7,7 +7,9 @@ import torch
 NUMBER_OF_EPISODES = 200
 
 
-def play_game(state: Any, models: List[SproutsModel], debug: bool = False) -> int:
+def play_game(
+    state: sprouts.Position, models: List[SproutsModel], debug: bool = False
+) -> int:
     visited_states_number = 0
     while not state.is_terminal_position():
         model_number = visited_states_number % 2
@@ -23,7 +25,9 @@ def play_game(state: Any, models: List[SproutsModel], debug: bool = False) -> in
     return model_number
 
 
-def testing(starting_pos: Any, models: List[Any]) -> Tuple[int, int]:
+def testing(
+    starting_pos: sprouts.Position, models: List[SproutsModel]
+) -> Tuple[int, int]:
     winning_model_nums: List[int] = []
     for t in range(NUMBER_OF_EPISODES):
         if t % (NUMBER_OF_EPISODES / 10) == 0:
@@ -45,14 +49,7 @@ def testing(starting_pos: Any, models: List[Any]) -> Tuple[int, int]:
     return first_player_wins, second_player_wins
 
 
-if __name__ == "__main__":
-    numbers_of_dots = [2]  # , 3, 5, 7]
-    models = []
-    models.append(torch.load("models/sprouts_model_2"))
-    # models.append(torch.load("models/sprouts_model_3"))
-    # models.append(torch.load("models/sprouts_model_5"))
-    # models.append(torch.load("models/sprouts_model_7"))
-    models.append(RandomModel())
+def main(numbers_of_dots: List[int], models: List[SproutsModel]) -> None:
     results = np.zeros([len(models), len(models)], int)
     for number_of_dots in numbers_of_dots:
         pos = sprouts.Position(sprouts.Position.start_position(number_of_dots, 0))
@@ -63,3 +60,14 @@ if __name__ == "__main__":
 
         print(results)
         np.save(f"models/testing_results_{number_of_dots}", results)
+
+
+if __name__ == "__main__":
+    numbers_of_dots = [2]  # , 3, 5, 7]
+    models = []
+    models.append(torch.load("models/sprouts_model_2"))
+    # models.append(torch.load("models/sprouts_model_3"))
+    # models.append(torch.load("models/sprouts_model_5"))
+    # models.append(torch.load("models/sprouts_model_7"))
+    models.append(RandomModel())
+    main(numbers_of_dots, models)
