@@ -90,7 +90,7 @@ def main() -> None:
             hidden_size=32,
             num_layers=3,
         )
-
+    print("Elkezdődött a tanítás")
     for i in range(TRAINING_ROUNDS):
         pos = sprouts.Position(sprouts.Position.start_position(NUM_OF_DOTS, 0))
         training(pos, model)
@@ -120,14 +120,17 @@ if __name__ == "__main__":
     NUM_OF_DOTS = 2
     TRAINING_ROUNDS = 10
     main()
-    EPSILON = 0.15
-    NUM_OF_DOTS = 3
-    TRAINING_ROUNDS = 50
-    main()
-    EPSILON = 0.15
-    NUM_OF_DOTS = 5
-    TRAINING_ROUNDS = 100
-    main()
-    EPSILON = 0.15
-    NUM_OF_DOTS = 7
-    main()
+
+    # EPSILON = 0.15
+    # NUM_OF_DOTS = 3
+    # TRAINING_ROUNDS = 50
+    # main()
+
+    # EPSILON = 0.15
+    # NUM_OF_DOTS = 5
+    # TRAINING_ROUNDS = 100
+    # main()
+
+    # EPSILON = 0.15
+    # NUM_OF_DOTS = 7
+    # main()

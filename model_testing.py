@@ -68,13 +68,12 @@ def testing(starting_pos: Any, models: List[Any]) -> Tuple[int, int]:
 
 
 if __name__ == "__main__":
-    numbers_of_dots = [2]
+    numbers_of_dots = [2]  # , 3, 5, 7]
     models = []
     models.append(torch.load("models/sprouts_model_2"))
     # models.append(torch.load("models/sprouts_model_3"))
     # models.append(torch.load("models/sprouts_model_5"))
     # models.append(torch.load("models/sprouts_model_7"))
-    # models.append(torch.load("models/sprouts_model_11"))
     models.append(RandomModel())
     results = np.zeros([len(models), len(models)], int)
     for number_of_dots in numbers_of_dots:
