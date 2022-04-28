@@ -45,7 +45,9 @@ def play_game(state: sprouts.Position, model: RNN, debug: bool = False) -> List[
     return visited_states
 
 
-def calculate_state_rewards(visited_states: List[str]) -> List[Tuple[str, int]]:
+def calculate_state_rewards(
+    visited_states: List[str],
+) -> List[Tuple[str, int]]:
     global first_player_wins, second_player_wins
     state_rewards = []
     for i, state_string in enumerate(reversed(visited_states)):
@@ -89,7 +91,9 @@ def main() -> None:
         )
     print("Elkezdődött a tanítás")
     for i in range(TRAINING_ROUNDS):
-        pos = sprouts.Position(sprouts.Position.start_position(NUM_OF_DOTS, 0))
+        pos = sprouts.Position(
+            sprouts.Position.start_position(NUM_OF_DOTS, 0),
+        )
         training(pos, model)
         print(f"Tanítási körök száma: {i+1} / {TRAINING_ROUNDS}")
         print(
@@ -103,7 +107,9 @@ def main() -> None:
 
     print("=" * 50)
     EPSILON = 0
-    pos = sprouts.Position(sprouts.Position.start_position(NUM_OF_DOTS, 0))
+    pos = sprouts.Position(
+        sprouts.Position.start_position(NUM_OF_DOTS, 0),
+    )
     states = play_game(pos, model, debug=True)
     training(pos, model)
     print(
