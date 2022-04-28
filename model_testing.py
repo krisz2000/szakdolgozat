@@ -1,17 +1,19 @@
-from typing import Any, List, Tuple
+from typing import Any, List, Tuple, Union
 import numpy as np
 from SproutsML import sprouts
+from SproutsML.RNN import RNN
 import torch
 
 NUMBER_OF_EPISODES = 200
-NUM_OF_DOTS = 4
 
 
 class RandomModel:
-    def __init__(self):
+    def __init__(self) -> None:
         pass
 
-    def choose_state(self, children, debug=False):
+    def choose_state(
+        self, children: List[Any], debug: bool = False
+    ) -> Tuple[int, List[sprouts.Position]]:
         states = []
         pos_strings = []
         for child in children:
@@ -25,7 +27,9 @@ class RandomModel:
         return np.random.randint(len(states)), states
 
 
-def play_game(state: Any, models, debug=False) -> int:
+def play_game(
+    state: Any, models: List[Union[RNN, RandomModel]], debug: bool = False
+) -> int:
     visited_states_number = 0
     while not state.is_terminal_position():
         model_number = visited_states_number % 2
@@ -64,12 +68,13 @@ def testing(starting_pos: Any, models: List[Any]) -> Tuple[int, int]:
 
 
 if __name__ == "__main__":
-    numbers_of_dots = [2, 3, 5, 7]
+    numbers_of_dots = [2]
     models = []
     models.append(torch.load("models/sprouts_model_2"))
-    models.append(torch.load("models/sprouts_model_3"))
-    models.append(torch.load("models/sprouts_model_5"))
-    models.append(torch.load("models/sprouts_model_7"))
+    # models.append(torch.load("models/sprouts_model_3"))
+    # models.append(torch.load("models/sprouts_model_5"))
+    # models.append(torch.load("models/sprouts_model_7"))
+    # models.append(torch.load("models/sprouts_model_11"))
     models.append(RandomModel())
     results = np.zeros([len(models), len(models)], int)
     for number_of_dots in numbers_of_dots:

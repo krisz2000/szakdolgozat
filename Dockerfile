@@ -37,4 +37,4 @@ COPY . .
 RUN cp build/*.so SproutsML/sprouts.so
 RUN pip3.9 install .
 
-ENTRYPOINT [ "python3.9" ]
+ENTRYPOINT [ "python3.9", "-u"]

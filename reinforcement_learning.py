@@ -24,10 +24,11 @@ def epsilon_state(
     if p >= eps:
         return choosen_state_index
     else:
-        return np.random.randint(0, number_of_states)
+        choosen_state_index = np.random.randint(0, number_of_states)
+        return choosen_state_index
 
 
-def play_game(state: Any, model: RNN, debug=False) -> List[str]:
+def play_game(state: sprouts.Position, model: RNN, debug: bool = False) -> List[str]:
     visited_states = []
     while not state.is_terminal_position():
         state.compute_children()
@@ -40,11 +41,11 @@ def play_game(state: Any, model: RNN, debug=False) -> List[str]:
             print(f"A jelenlegi állapot: {state.export_to_string()}")
         visited_states.append(state.export_to_string())
     if debug:
-        print("Végállapot elérve\n"
+        print("Végállapot elérve\n")
     return visited_states
 
 
-def calculate_state_rewards(visited_states: List[str]) -> List[Tuple[Any, int]]:
+def calculate_state_rewards(visited_states: List[str]) -> List[Tuple[str, int]]:
     global first_player_wins, second_player_wins
     state_rewards = []
     for i, state_string in enumerate(reversed(visited_states)):
@@ -74,7 +75,7 @@ def training(starting_pos: Any, model: RNN) -> None:
     model.train(all_state_rewards)
 
 
-def main():
+def main() -> None:
     global NUM_OF_DOTS, EPSILON, first_player_wins, second_player_wins
     if len(sys.argv) > 1:
         NUM_OF_DOTS = int(sys.argv[1])
@@ -129,10 +130,4 @@ if __name__ == "__main__":
     main()
     EPSILON = 0.15
     NUM_OF_DOTS = 7
-    main()
-    EPSILON = 0.15
-    NUM_OF_DOTS = 11
-    main()
-    EPSILON = 0.15
-    NUM_OF_DOTS = 30
     main()

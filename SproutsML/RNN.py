@@ -1,4 +1,4 @@
-from typing import Dict, List, Tuple
+from typing import Any, Dict, List, Tuple
 import torch
 import torch.nn as nn
 from torch import optim
@@ -30,15 +30,15 @@ class RNN(nn.Module):
         self.loss_function = nn.BCEWithLogitsLoss()
         self.data_seen_count = 0
 
-    def forward(self, input_seq):
+    def forward(self, input_seq: str) -> float:
         input_seq = torch.IntTensor([ord(char) for char in input_seq])
         embedding = self.embedding(input_seq)
-        output, hidden_state = self.rnn(embedding)
-        output = self.decoder(output)
+        rnn_output, hidden_state = self.rnn(embedding)
+        output: List[float] = self.decoder(rnn_output)
         score = output[-1]
         return score
 
-    def train(self, data: List[Tuple[str, float]]):
+    def train(self, data: List[Tuple[str, int]]) -> None:
         for state, reward in data:
             # print(state, reward)
             self.optimizer.zero_grad()
@@ -47,12 +47,10 @@ class RNN(nn.Module):
             loss.backward()
             self.optimizer.step()
             self.data_seen_count += 1
-        # print(self.embedding(torch.IntTensor([ord("!")])))
-        # print(self.embedding(torch.IntTensor([ord("a")])))
-        # print(self.embedding(torch.IntTensor([ord("A")])))
-        # print(self.embedding(torch.IntTensor([ord("|")])))
 
-    def choose_state(self, children, debug=False):
+    def choose_state(
+        self, children: List[Any], debug: bool = False
+    ) -> Tuple[int, List[sprouts.Position]]:
         values = []
         states = []
         pos_strings = []
