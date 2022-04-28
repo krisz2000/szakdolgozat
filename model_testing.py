@@ -1,35 +1,13 @@
 from typing import Any, List, Tuple, Union
 import numpy as np
 from SproutsML import sprouts
-from SproutsML.RNN import RNN
+from SproutsML.models import SproutsModel, RandomModel
 import torch
 
 NUMBER_OF_EPISODES = 200
 
 
-class RandomModel:
-    def __init__(self) -> None:
-        pass
-
-    def choose_state(
-        self, children: List[Any], debug: bool = False
-    ) -> Tuple[int, List[sprouts.Position]]:
-        states = []
-        pos_strings = []
-        for child in children:
-            pos = sprouts.Position(child)
-            pos.canonize()
-            pos_string = pos.export_to_string()
-            if pos_string not in pos_strings:
-                pos_strings.append(pos_string)
-                states.append(pos)
-
-        return np.random.randint(len(states)), states
-
-
-def play_game(
-    state: Any, models: List[Union[RNN, RandomModel]], debug: bool = False
-) -> int:
+def play_game(state: Any, models: List[SproutsModel], debug: bool = False) -> int:
     visited_states_number = 0
     while not state.is_terminal_position():
         model_number = visited_states_number % 2

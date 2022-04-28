@@ -1,3 +1,4 @@
+from abc import abstractmethod
 from typing import Any, Dict, List, Tuple
 import torch
 import torch.nn as nn
@@ -9,7 +10,17 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 soft_max = nn.Softmax(0)
 
 
-class RNN(nn.Module):
+class SproutsModel:
+    @abstractmethod
+    def choose_state(
+        self,
+        children: List[Any],
+        debug: bool = False,
+    ) -> Tuple[int, List[sprouts.Position]]:
+        pass
+
+
+class RNN(nn.Module, SproutsModel):
     def __init__(
         self,
         input_size: int,
@@ -75,3 +86,20 @@ class RNN(nn.Module):
             print()
 
         return choice, states
+
+
+class RandomModel(SproutsModel):
+    def choose_state(
+        self, children: List[Any], debug: bool = False
+    ) -> Tuple[int, List[sprouts.Position]]:
+        states = []
+        pos_strings = []
+        for child in children:
+            pos = sprouts.Position(child)
+            pos.canonize()
+            pos_string = pos.export_to_string()
+            if pos_string not in pos_strings:
+                pos_strings.append(pos_string)
+                states.append(pos)
+
+        return np.random.randint(len(states)), states

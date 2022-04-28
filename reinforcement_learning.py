@@ -5,7 +5,7 @@ from typing import Any, List, Tuple
 import numpy as np
 import torch
 from SproutsML import sprouts
-from SproutsML.RNN import RNN
+from SproutsML.models import RNN
 
 EPSILON = 0.15
 NUMBER_OF_EPISODES = 200
@@ -64,10 +64,7 @@ def calculate_state_rewards(visited_states: List[str]) -> List[Tuple[str, int]]:
 
 def training(starting_pos: Any, model: RNN) -> None:
     all_state_rewards = []
-    for t in range(NUMBER_OF_EPISODES):
-        # if t % (NUMBER_OF_EPISODES / 10) == 0:
-        #     print(f"Epizódok száma: {t} / {NUMBER_OF_EPISODES}")
-
+    for _ in range(NUMBER_OF_EPISODES):
         visited_states = play_game(starting_pos, model)
         state_rewards = calculate_state_rewards(visited_states)
         all_state_rewards.extend(state_rewards)
