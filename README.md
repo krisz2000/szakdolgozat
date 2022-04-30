@@ -1,4 +1,4 @@
-# Neurális hálózatok alkalmazása sprouts játékban
+# Neurális hálózatok alkalmazása a sprouts játékban
 
 A projekt futtatásához [docker](https://docs.docker.com/get-docker/) szükséges.
 
